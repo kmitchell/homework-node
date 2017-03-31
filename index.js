@@ -15,6 +15,6 @@ function downloadPackages (count) {
     .then(getTarballUrls)
     .then(handleTars)
     .catch((error) => console.log(error))
-    }
+}
 
 downloadPackages(COUNT)
