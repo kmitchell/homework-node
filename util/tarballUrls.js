@@ -1,23 +1,23 @@
-const request = require('request')
-const async = require('async')
+const request = require('request-promise')
+const Promise = require('bluebird')
 
 // Grabs and returns an array of package names and their
 // tarball URLs, with a Map provided by topPackagesList.js
-
-var getTarballUrls = function (packageMap, callback) {
+var getTarballUrls = function (packageMap) {
   var constructedUris = constructUris(packageMap)
   var names = Array.from(packageMap.keys())
 
-  async.map(constructedUris, makeRequest, function (error, results) {
-    if (error) {
-      console.log(error)
-    } else {
-      var zippedResults = names.map(function (error, item) {
+  return Promise.map(constructedUris, function(uri) {
+    return request({uri: uri, json: true})
+      .then(function (response) { // return the tarball url
+        return response.dist.tarball
+      })
+    })
+    .then(function(results) { // add package names to results
+      return names.map(function (error, item) {
         return [names[item], results[item]]
       })
-      callback(zippedResults)
-    }
-  })
+    })
 
   function constructUris (packageMap) {
     var uris = []
@@ -26,16 +26,6 @@ var getTarballUrls = function (packageMap, callback) {
       uris.push('https://registry.npmjs.org/' + name + '/' + version)
     }
     return uris
-  }
-
-  function makeRequest (uri, callback) {
-    request({uri: uri, json: true}, function (error, response, body) {
-      if (error) {
-        console.log(error)
-      } else {
-        callback(null, body.dist.tarball)
-      }
-    })
   }
 }
 

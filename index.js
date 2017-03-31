@@ -1,26 +1,20 @@
 'use strict'
 
-const getTopPackagesMetadata = require('./util/topPackagesMetadata.js')
-const getTarballUrls = require('./util/tarballUrls.js')
-const handleTars = require('./util/handleTars.js')
+const Promise = require('bluebird')
+const getTopPackagesMetadata = require('./util/topPackagesMetadata')
+const getTarballUrls = require('./util/tarballUrls')
+const handleTars = require('./util/handleTars')
 const COUNT = parseInt(process.env.COUNT, 10) || 10
 
 module.exports = downloadPackages
 
-function downloadPackages (count, callback) {
+function downloadPackages (count) {
   console.log(`Beginning download of top ${COUNT} packages...`)
 
-  getTopPackagesMetadata(count, function (list) {
-    getTarballUrls(list, function (urls) {
-      handleTars(urls, function (error, result) {
-        if (error) console.log(error)
-        else callback(console.log(result))
-      })
-    })
-  })
-}
+  getTopPackagesMetadata(count)
+    .then(getTarballUrls)
+    .then(handleTars)
+    .catch((error) => console.log(error))
+    }
 
-downloadPackages(COUNT, function (error, result) {
-  if (error) console.log(error)
-  else console.log(result)
-})
+downloadPackages(COUNT)
