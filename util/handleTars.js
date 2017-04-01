@@ -1,3 +1,5 @@
+'use strict'
+
 const tar = require('tar-fs')
 const gunzip = require('gunzip-maybe')
 const request = require('request')
