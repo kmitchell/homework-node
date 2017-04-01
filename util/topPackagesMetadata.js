@@ -8,36 +8,26 @@ var getTopPackagesMetadata = function (count) {
   return new Promise (function (resolve, reject) {
     var options = {
       uri: 'https://www.npmjs.com/browse/depended',
-      transform: function (body) {
-        return cheerio.load(body)
-      }
+      transform: (body) => { return cheerio.load(body)}
     }
 
     return request(options)
-      .then(function ($) {
-        resolve(extractPackagesMetadata(count, $))
-      })
-      .catch(function (error) {
-        reject(error)
-      })
+      .then(($) => resolve(extractPackagesMetadata(count, $)))
+      .catch((error) => reject(error))
   })
 
   function extractPackagesMetadata (count, $) {
-    var packageNames = parseElements('name', count, $)
-    var packageVersions = parseElements('version', count, $)
-
-    var list = new Map() // use Map instead of Object to preserve order
-    for (var i = 0; i < packageNames.length; i++) {
-      list.set(packageNames[i], packageVersions[i])
-    }
-    return list
+    var names = parseElements('name', count, $)
+    var versions = parseElements('version', count, $)
+    var metadata = names.map((name, version) => { return [name, versions[version]] })
+    return new Map(metadata) // use Map instead of Object to preserve order
   }
 
   function parseElements (element, count, $) {
-    var elements = $(`.${element}`).map(function() {
-      return $(this).text()
-    }).slice(0, (count).get()
-    return elements
+    return $(`.${element}`)
+      .map(function() { return $(this).text() })
+      .slice(0, count)
+      .get()
   }
 }
 
