@@ -9,21 +9,23 @@ var getTarballUrls = function (packageMap) {
 
   return Promise.map(constructedUris, function(uri) {
     return request({uri: uri, json: true})
-      .then(function (response) { // return the tarball url
+      // return the tarball url
+      .then(function (response) {
         return response.dist.tarball
       })
     })
-    .then(function(results) { // add package names to results
-      return names.map(function (error, item) {
-        return [names[item], results[item]]
-      })
+  // then zip results with package names
+  .then(function(results) {
+    return names.map(function (error, item) {
+      return [names[item], results[item]]
     })
+  })
 
   function constructUris (packageMap) {
     var uris = []
     for (var item of packageMap) {
       var name = item[0], version = item[1]
-      uris.push('https://registry.npmjs.org/' + name + '/' + version)
+      uris.push(`https://registry.npmjs.org/${name}/${version}`)
     }
     return uris
   }
