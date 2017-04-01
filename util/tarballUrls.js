@@ -17,8 +17,8 @@ var getTarballUrls = function (packageMap) {
   })
   // then zip results with package names
   .then(function (results) {
-    return names.map(function (error, item) {
-      return [names[item], results[item]]
+    return names.map(function (name, uri) {
+      return [name, results[uri]]
     })
   })
   .catch((error) => console.log(error))
