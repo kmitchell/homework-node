@@ -7,25 +7,26 @@ var getTarballUrls = function (packageMap) {
   var constructedUris = constructUris(packageMap)
   var names = Array.from(packageMap.keys())
 
-  return Promise.map(constructedUris, function(uri) {
+  return Promise.map(constructedUris, function (uri) {
     return request({uri: uri, json: true})
       // return the tarball url
       .then(function (response) {
         return response.dist.tarball
       })
-    })
+      .catch((error) => console.log(error))
+  })
   // then zip results with package names
-  .then(function(results) {
+  .then(function (results) {
     return names.map(function (error, item) {
       return [names[item], results[item]]
     })
   })
+  .catch((error) => console.log(error))
 
   function constructUris (packageMap) {
     var uris = []
     for (var item of packageMap) {
-      var name = item[0], version = item[1]
-      uris.push(`https://registry.npmjs.org/${name}/${version}`)
+      uris.push(`https://registry.npmjs.org/${item[0]}/${item[1]}`)
     }
     return uris
   }

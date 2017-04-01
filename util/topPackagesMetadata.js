@@ -5,10 +5,10 @@ const Promise = require('bluebird')
 // Grabs /depended HTML, parses pertinent elements, and
 // returns those elements in a Map.
 var getTopPackagesMetadata = function (count) {
-  return new Promise (function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var options = {
       uri: 'https://www.npmjs.com/browse/depended',
-      transform: (body) => { return cheerio.load(body)}
+      transform: (body) => { return cheerio.load(body) }
     }
 
     return request(options)
@@ -25,7 +25,7 @@ var getTopPackagesMetadata = function (count) {
 
   function parseElements (element, count, $) {
     return $(`.${element}`)
-      .map(function() { return $(this).text() })
+      .map(function () { return $(this).text() })
       .slice(0, count)
       .get()
   }

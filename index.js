@@ -1,6 +1,5 @@
 'use strict'
 
-const Promise = require('bluebird')
 const getTopPackagesMetadata = require('./util/topPackagesMetadata')
 const getTarballUrls = require('./util/tarballUrls')
 const handleTars = require('./util/handleTars')
@@ -14,8 +13,7 @@ function downloadPackages (count, callback) {
   getTopPackagesMetadata(count)
     .then(getTarballUrls)
     .then(handleTars)
-    .then(() => callback() )
-    .then(() => console.log("All done."))
+    .then(() => callback())
+    .then(() => console.log('All done.'))
     .catch((error) => console.log(error))
-
 }

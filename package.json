@@ -1,7 +1,12 @@
 {
   "scripts": {
-    "test": "node test.js",
+    "test": "standard && node test.js",
     "start": "node index.js"
+  },
+  "standard": {
+    "ignore": [
+      "/packages/"
+    ]
   },
   "dependencies": {
     "request": "~2.81.0",
