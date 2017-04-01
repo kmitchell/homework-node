@@ -14,10 +14,22 @@ var handleTars = function (packageMetadatas) {
         .get(metadata[1])
         .on('error', (error) => { return reject ((error) => console.log(error))})
         .pipe(gunzip())
-        .pipe(tar.extract(`./packages/${metadata[0]}`))
+        .on('error', (error) => { return reject ((error) => console.log(error))})
+        .pipe(tar.extract(`./packages/${metadata[0]}`, {
+          map: function(header) {
+            header.name = transformPath(header.name)
+            return header
+          }
+        }))
+        .on('error', (error) => { return reject ((error) => console.log(error))})
         .on('finish', function () {
-          return resolve (console.log(`* Downloaded and extracted '${metadata[0]}'' successfully!`))
+          return resolve (console.log(`* Downloaded and extracted '${metadata[0]}' successfully!`))
         })
+
+      function transformPath (path) {
+        var original = path.split('/'), updated = original.splice(0,1)
+        return original.join('/')
+      }
     })
   }
 }
