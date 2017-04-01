@@ -3,10 +3,10 @@ const gunzip = require('gunzip-maybe')
 const request = require('request')
 const Promise = require('bluebird')
 
-// Asynchronously downloads and extracts package tars into
-// appropriate folders, via a list from tarballUrls.js
-var handleTars = function (packageMetadatas) {
-  return Promise.map(packageMetadatas, makeRequest)
+// Asynchronously downloads and extracts package tars into appropriate
+// folders, via an array of package names and tarball URLs
+var handleTars = function (packagesMetadata) {
+  return Promise.map(packagesMetadata, makeRequest)
 
   function makeRequest (metadata) {
     return new Promise(function (resolve, reject) {
@@ -16,6 +16,7 @@ var handleTars = function (packageMetadatas) {
         .on('error', (error) => { return reject(console.log(error)) })
         .pipe(tar.extract(`./packages/${metadata[0]}`, {
           map: function (header) {
+            // remove the unnecessary 'package/' parent directory from path
             header.name = transformPath(header.name)
             return header
           }

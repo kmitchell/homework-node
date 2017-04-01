@@ -3,7 +3,7 @@ const cheerio = require('cheerio')
 const Promise = require('bluebird')
 
 // Grabs /depended HTML, parses pertinent elements, and
-// returns those elements in a Map.
+// returns the text of those elements in an array
 var getTopPackagesMetadata = function (count) {
   return new Promise(function (resolve, reject) {
     var options = {
@@ -19,8 +19,7 @@ var getTopPackagesMetadata = function (count) {
   function extractPackagesMetadata (count, $) {
     var names = parseElements('name', count, $)
     var versions = parseElements('version', count, $)
-    var metadata = names.map((name, version) => { return [name, versions[version]] })
-    return new Map(metadata) // use Map instead of Object to preserve order
+    return names.map((name, version) => { return [name, versions[version]] })
   }
 
   function parseElements (element, count, $) {
