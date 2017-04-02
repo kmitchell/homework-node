@@ -12,7 +12,8 @@ var handleTars = function (packagesMetadata) {
 
   function makeRequest (metadata) {
     return new Promise(function (resolve, reject) {
-      request.get(metadata[1])
+      request
+        .get(metadata[1])
         .on('error', (error) => { return reject(console.log(error)) })
         .pipe(gunzip())
         .on('error', (error) => { return reject(console.log(error)) })

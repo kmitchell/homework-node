@@ -3,17 +3,19 @@
 const request = require('request-promise')
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
+const DEPENDED_URI = process.env.DEPENDED_URI || 'https://www.npmjs.com/browse/depended'
 
 // Grabs /depended HTML, parses pertinent elements, and
 // returns the text of those elements in an array
 var getTopPackagesMetadata = function (count) {
   return new Promise(function (resolve, reject) {
     var options = {
-      uri: 'https://www.npmjs.com/browse/depended',
+      uri: DEPENDED_URI,
       transform: (body) => { return cheerio.load(body) }
     }
 
-    return request(options)
+    return request
+      .get(options)
       .then(($) => resolve(extractPackagesMetadata(count, $)))
       .catch((error) => reject(error))
   })
