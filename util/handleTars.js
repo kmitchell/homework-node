@@ -5,6 +5,8 @@ const gunzip = require('gunzip-maybe')
 const request = require('request')
 const Promise = require('bluebird')
 
+module.exports = handleTars
+
 // Asynchronously downloads and extracts package tars into appropriate
 // folders, via an array of package names and tarball URLs
 function handleTars (packagesMetadata) {
@@ -37,5 +39,3 @@ function handleTars (packagesMetadata) {
     })
   }
 }
-
-module.exports = handleTars

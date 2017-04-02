@@ -4,6 +4,8 @@ const request = require('request-promise')
 const Promise = require('bluebird')
 const REGISTRY_URI = process.env.REGISTRY_URI || 'https://registry.npmjs.org/'
 
+module.exports = getTarballUrls
+
 // Grabs package registry metadata and returns an array of package names and their
 // tarball URLs, via an array of package names and versions
 function getTarballUrls (packagesMetadata) {
@@ -27,5 +29,3 @@ function getTarballUrls (packagesMetadata) {
   })
   .catch((error) => console.log(error))
 }
-
-module.exports = getTarballUrls

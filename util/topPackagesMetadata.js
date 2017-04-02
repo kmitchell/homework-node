@@ -5,6 +5,8 @@ const cheerio = require('cheerio')
 const Promise = require('bluebird')
 const DEPENDED_URI = process.env.DEPENDED_URI || 'https://www.npmjs.com/browse/depended'
 
+module.exports = getTopPackagesMetadata
+
 // Grabs /depended HTML, parses pertinent elements, and
 // returns the text of those elements in an array
 function getTopPackagesMetadata (count) {
@@ -33,5 +35,3 @@ function getTopPackagesMetadata (count) {
       .get()
   }
 }
-
-module.exports = getTopPackagesMetadata
