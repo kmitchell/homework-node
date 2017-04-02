@@ -1,6 +1,6 @@
 'use strict'
 
-const utils = require ('./util')
+const utils = require('./util')
 
 module.exports = downloadPackages
 
