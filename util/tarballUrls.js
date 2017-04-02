@@ -6,7 +6,7 @@ const REGISTRY_URI = process.env.REGISTRY_URI || 'https://registry.npmjs.org/'
 
 // Grabs package registry metadata and returns an array of package names and their
 // tarball URLs, via an array of package names and versions
-var getTarballUrls = function (packagesMetadata) {
+function getTarballUrls (packagesMetadata) {
   var constructedUris = packagesMetadata.map(function (metadata) {
     return REGISTRY_URI + `${metadata[0]}/${metadata[1]}`
   })

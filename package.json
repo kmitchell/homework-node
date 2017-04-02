@@ -21,6 +21,6 @@
     "run-series": "^1.1.4",
     "standard": "^9.0.2",
     "tape": "~4.6.0",
-    "tap-spec": "4.1.1",
+    "tap-spec": "4.1.1"
   }
 }

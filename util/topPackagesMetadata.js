@@ -7,7 +7,7 @@ const DEPENDED_URI = process.env.DEPENDED_URI || 'https://www.npmjs.com/browse/d
 
 // Grabs /depended HTML, parses pertinent elements, and
 // returns the text of those elements in an array
-var getTopPackagesMetadata = function (count) {
+function getTopPackagesMetadata (count) {
   return new Promise(function (resolve, reject) {
     var options = {
       uri: DEPENDED_URI,

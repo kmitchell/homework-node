@@ -7,7 +7,7 @@ const Promise = require('bluebird')
 
 // Asynchronously downloads and extracts package tars into appropriate
 // folders, via an array of package names and tarball URLs
-var handleTars = function (packagesMetadata) {
+function handleTars (packagesMetadata) {
   return Promise.map(packagesMetadata, makeRequest)
 
   function makeRequest (metadata) {
