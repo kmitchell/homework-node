@@ -14,7 +14,7 @@ function getTarballUrls (packagesMetadata) {
   })
 
   return Promise.map(constructedUris, function (uri) {
-    return request({uri: uri, json: true})
+    return request({uri: uri, timeout: 5000, json: true})
       // return the tarball url
       .then(function (response) {
         return response.dist.tarball

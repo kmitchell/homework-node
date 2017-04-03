@@ -13,6 +13,7 @@ function getTopPackagesMetadata (count) {
   return new Promise(function (resolve, reject) {
     var options = {
       uri: DEPENDED_URI,
+      timeout: 5000,
       transform: (body) => { return cheerio.load(body) }
     }
 
