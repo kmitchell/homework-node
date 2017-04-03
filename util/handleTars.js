@@ -10,9 +10,7 @@ module.exports = handleTars
 // Asynchronously downloads and extracts package tars into appropriate
 // folders, via an array of package names and tarball URLs
 function handleTars (packagesMetadata) {
-  return Promise.map(packagesMetadata, makeRequest)
-
-  function makeRequest (metadata) {
+  return Promise.map(packagesMetadata, function (metadata) {
     return new Promise(function (resolve, reject) {
       request
         .get(metadata[1])
@@ -37,5 +35,5 @@ function handleTars (packagesMetadata) {
         return splitPath.join('/')
       }
     })
-  }
+  })
 }
