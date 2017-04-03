@@ -68,27 +68,15 @@ function utilTestplan (callback) {
 
     series([
       cleanupPackages,
-      handleTars,
       tarballUrls,
       topPackagesMetadata,
       cleanupPackages
     ], assert.end)
 
-    function handleTars (callback) {
-      fs.readdir('./packages', function (err, files) {
-        if (err) return callback(err)
-        util.handleTars(tarballMetadata)
-          .then(function () {
-            assert.equal(files.length, 1, `has 1 file`)
-          })
-          .then(() => callback())
-      })
-    }
-
     function tarballUrls (callback) {
       util.getTarballUrls(versionMetadata)
         .then(function (result) {
-          assert.equal(tarballMetadata.toString(), result.toString(), 'tarballUrls returns expected result')
+          assert.equal(result.toString(), tarballMetadata.toString(), 'tarballUrls returns expected result')
         })
         .then(() => callback())
     }
@@ -96,7 +84,7 @@ function utilTestplan (callback) {
     function topPackagesMetadata (callback) {
       util.getTopPackagesMetadata(1)
         .then(function (result) {
-          assert.equal(versionMetadata.toString(), result.toString(), 'topPackagesMetadata returns expected result')
+          assert.equal(result.toString(), versionMetadata.toString(), 'topPackagesMetadata returns expected result')
         })
         .then(() => callback())
     }
