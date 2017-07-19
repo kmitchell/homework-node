@@ -1,11 +1,26 @@
 {
   "scripts": {
-    "test": "node test.js"
+    "test": "standard && node test.js | tap-spec",
+    "start": "node index.js"
   },
-  "dependencies": {},
+  "standard": {
+    "ignore": [
+      "/packages/"
+    ]
+  },
+  "dependencies": {
+    "request": "~2.81.0",
+    "request-promise": "~4.2.0",
+    "bluebird": "~3.5.0",
+    "tar-fs": "~1.15.2",
+    "gunzip-maybe": "~1.4.0",
+    "cheerio": "~0.22.0"
+  },
   "devDependencies": {
     "get-folder-size": "~1.0.0",
+    "run-series": "^1.1.4",
+    "standard": "^9.0.2",
     "tape": "~4.6.0",
-    "run-series": "^1.1.4"
+    "tap-spec": "4.1.1"
   }
 }
